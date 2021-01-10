@@ -9,7 +9,6 @@
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
       (import "${builtins.fetchTarball https://github.com/rycee/home-manager/archive/master.tar.gz}/nixos")
-
     ];
 
   boot = {
@@ -27,6 +26,12 @@
 
   # Enable Flatpak
   services.flatpak.enable = true;
+
+  # Allow Non-Free Packages
+  nixpkgs.config.allowUnfree = true;
+  
+  # Enable Home-Manager
+  home-manager.users.tek = import ./home.nix;
 
 
   # Enable 32-bit graphics support for games
