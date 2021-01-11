@@ -14,20 +14,16 @@
   home.username = "tek";
   home.homeDirectory = "/home/tek";
   home.packages = with pkgs; [
-    steam-run
-    unzip
-    p7zip
-    unrar
-    gzip
-    starship
-    axel
-    uget
-    aria
-    ungoogled-chromium
-    firefox-devedition-bin
-    google-chrome
-    httplz
+    # Etc
     xdg-dbus-proxy
+    gnome3.gnome-screenshot
+    playerctl
+    xfce.thunar
+    blueman
+    dragon-drop
+
+    # Shell Customization
+    starship
     autojump
     zsh-completions
     zsh-command-time
@@ -35,34 +31,52 @@
     zsh-history-substring-search
     zsh-syntax-highlighting
     nix-zsh-completions
-    neovim-nightly
-    nodejs
-    ripgrep
-    fzf
-    silver-searcher
-    gcc
-    gnome3.gnome-screenshot
-    niv
-    playerctl
-    lxappearance
-    materia-theme
-    papirus-icon-theme
-    twemoji-color-font
-    noto-fonts-emoji-blob-bin
-    emojione
-    xfce.thunar
-    blueman
-    mongodb-compass
-    dragon-drop
+
+    # CLI Tools
+    axel
+    aria
     bat
     exa
     tokei
     viu
+    ripgrep
+    fzf
+    silver-searcher
+    httplz
 
-
-
-
+    # Fonts
     (nerdfonts.override { fonts = [ "JetBrainsMono" "DejaVuSansMono" ]; })
+    twemoji-color-font
+    noto-fonts-emoji-blob-bin
+    emojione
+    
+    # Development Tools
+    mongodb-compass
+    neovim-nightly
+    nodejs
+    niv
+    gcc
+
+    # Themes
+    lxappearance
+    materia-theme
+    papirus-icon-theme
+
+    # Archiving
+    zip
+    unzip
+    p7zip
+    unrar
+    gzip
+
+    # Browsers
+    ungoogled-chromium
+    firefox-devedition-bin
+    google-chrome
+
+
+    # Running Software
+    steam-run
     wineWowPackages.full
     winetricks
   ];
