@@ -58,7 +58,6 @@
     
     # Development Tools
     mongodb-compass
-    nodejs
     niv
 
     # Text Editors
