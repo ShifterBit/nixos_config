@@ -17,10 +17,16 @@
     # Etc
     xdg-dbus-proxy
     gnome3.gnome-screenshot
+    gnome3.gnome-settings-daemon
+    kdeApplications.kdeconnect-kde
     playerctl
     xfce.thunar
     blueman
-    dragon-drop
+    element-desktop
+    mime-types
+    shared-mime-info
+    perl532Packages.FileMimeInfo
+    nextcloud-client
 
     # Shell Customization
     starship
@@ -52,10 +58,14 @@
     
     # Development Tools
     mongodb-compass
-    neovim-nightly
     nodejs
     niv
-    gcc
+
+    # Text Editors
+    neovim-nightly
+    micro
+    kakoune
+    
 
     # Themes
     lxappearance
@@ -71,14 +81,30 @@
 
     # Browsers
     ungoogled-chromium
-    firefox-devedition-bin
-    google-chrome
+
+    # Language Servers
+    clang
+    rnix-lsp
+    clang-tools
+    rust-analyzer
+    nodePackages.pyright
+    haskell-language-server
+    sumneko-lua-language-server
+    nodePackages.vscode-json-languageserver
+    nodePackages.yaml-language-server
+    nodePackages.bash-language-server
+    nodePackages.vue-language-server
+    nodePackages.dockerfile-language-server-nodejs
+    nodePackages.typescript-language-server
+    nodePackages.vscode-css-languageserver-bin
+    nodePackages.vscode-html-languageserver-bin
 
 
-    # Running Software
+    # Running Software/Gaming
     steam-run
-    wineWowPackages.full
+    appimage-run
     winetricks
+    wineWowPackages.staging
   ];
 
   programs.direnv.enable = true;

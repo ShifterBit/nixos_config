@@ -59,11 +59,11 @@
 
   # Enable XDG Portal
   xdg.portal.enable = true;
-  xdg.portal.extraPortals = with pkgs; [
-      xdg-desktop-portal-wlr
-      xdg-desktop-portal-gtk
-    ];
+  xdg.portal.extraPortals = with pkgs; [ xdg-desktop-portal-wlr xdg-desktop-portal-gtk xdg-desktop-portal-kde ];
   xdg.portal.gtkUsePortal = true;
+  systemd.user.services.xdg-desktop-portal.environment = {
+    XDG_DESKTOP_PORTAL_DIR = config.environment.variables.XDG_DESKTOP_PORTAL_DIR;
+  };
  
   # Keep Derivations for nix_direnv
   nix.extraOptions = ''
@@ -81,7 +81,6 @@
   # Controller Support
   hardware.xpadneo.enable = true;
   services.hardware.xow.enable = true;
-
 
   # DNSCrypt
   services.resolved.enable = false;
@@ -144,6 +143,7 @@
   extraPackages = with pkgs; [
     swaylock-effects
     swayidle
+    waybar
     wl-clipboard
     mako # notification daemon
     wofi # Dmenu is the default in the config but i recommend wofi since its wayland native
@@ -174,6 +174,13 @@
   # Enable touchpad support (enabled default in most desktopManager).
   services.xserver.libinput.enable = true;
 
+  # Font Config
+  fonts.fontconfig.enable = true;
+  fonts.fontconfig.antialias = true;
+  fonts.fontconfig.allowBitmaps = true;
+  fonts.fontconfig.hinting.enable = true;
+
+
   # Enable ZSH
   programs.zsh.enable = true;
 
@@ -195,8 +202,15 @@
      mpv-unwrapped xwayland
      virtmanager qemu
      xdg-desktop-portal
+     fontconfig gsettings-desktop-schemas
+     gnome3.gnome-settings-daemon
+     glib
    ];
 
+  # Udev Packages
+  services.udev.packages = with pkgs; [ gnome3.gnome-settings-daemon ];
+  # DBus packages
+  services.dbus.packages = with pkgs; [ gnome2.GConf ];
   # Enable the OpenSSH daemon.
   services.openssh.enable = true;
 
