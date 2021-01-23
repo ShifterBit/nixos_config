@@ -18,7 +18,6 @@
     xdg-dbus-proxy
     gnome3.gnome-screenshot
     gnome3.gnome-settings-daemon
-    kdeApplications.kdeconnect-kde
     playerctl
     xfce.thunar
     blueman
@@ -27,6 +26,9 @@
     shared-mime-info
     perl532Packages.FileMimeInfo
     nextcloud-client
+    nodePackages.livedown
+    python38Full
+    python38Packages.pynvim
 
     # Shell Customization
     starship
@@ -60,10 +62,6 @@
     mongodb-compass
     niv
 
-    # Text Editors
-    neovim-nightly
-    micro
-    kakoune
     
 
     # Themes
@@ -105,6 +103,18 @@
     winetricks
     wineWowPackages.staging
   ];
+  programs.neovim = {
+      enable = true;
+      extraConfig = '''';
+      withPython3 = true;
+      package = pkgs.neovim-nightly;
+      extraPython3Packages = (ps: with ps; [
+        pynvim
+        unidecode
+        black
+        isort
+      ]);
+    };
 
   programs.direnv.enable = true;
   programs.direnv.enableNixDirenvIntegration = true;
