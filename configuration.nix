@@ -8,7 +8,9 @@
   imports =
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
-      (import "${builtins.fetchTarball https://github.com/rycee/home-manager/archive/master.tar.gz}/nixos")
+      ./packages.nix
+      ./networking.nix
+      ./windowManagers.nix
     ];
 
   boot = {
@@ -27,32 +29,18 @@
   # Enable Flatpak
   services.flatpak.enable = true;
 
-  # Allow Non-Free Packages
-  nixpkgs.config.allowUnfree = true;
-  
-  # Enable Home-Manager
-  home-manager.users.tek = import ./home.nix;
-
+  # Set Time Zone
+  time.timeZone = "Africa/Banjul";
 
   # Enable 32-bit graphics support for games
   hardware.opengl.driSupport32Bit = true;
   hardware.opengl.extraPackages32 = with pkgs.pkgsi686Linux; [ libva ];
   hardware.pulseaudio.support32Bit = true;
 
-
   # Enable Virtualization
-  virtualisation.kvmgt.enable = true;
-  virtualisation.libvirtd.enable = true;
-  virtualisation.kvmgt.vgpus = {
-    "i915-GVTg_V5_4" = {
-      uuid = ["f7f5ba98-dc36-4ffb-a880-846b3b64e139"];
-    };
-  };  
-  virtualisation.libvirtd = {
-    qemuVerbatimConfig = ''
-      seccomp_sandbox = 0
-    '';
-  };
+  virtualisation.virtualbox.host.enable = true;
+  users.extraGroups.vboxusers.members = [ "tek" ];
+  virtualisation.virtualbox.host.enableExtensionPack = true;
 
   # Enable DConf
   programs.dconf.enable = true;
@@ -70,116 +58,35 @@
     keep-outputs = true
     keep-derivations = true
     '';
-
   # MongoDB
   services.mongodb.enable = true;
-
-  # Enable Bluetooth
-  hardware.bluetooth.enable = true;
-  services.blueman.enable = true;
 
   # Controller Support
   hardware.xpadneo.enable = true;
   services.hardware.xow.enable = true;
 
-  # DNSCrypt
-  services.resolved.enable = false;
-  networking = {
-    hostName = "nixos";
-    nameservers = [ "127.0.0.1" "::1" ];
-    resolvconf = {
-      enable = true;
-      useLocalResolver = true;
-    };
-    # If using dhcpcd:
-    #dhcpcd.extraConfig = "nohook resolv.conf";
-    # If using NetworkManager:
-    networkmanager = {
-      enable = true;
-      dns = "none";
-    };
-  };
-
-  services.dnscrypt-proxy2 = {
-    enable = true;
-    settings = {
-      ipv6_servers = true;
-      require_dnssec = true;
-
-      sources.public-resolvers = {
-        urls = [
-          "https://raw.githubusercontent.com/DNSCrypt/dnscrypt-resolvers/master/v3/public-resolvers.md"
-          "https://download.dnscrypt.info/resolvers-list/v3/public-resolvers.md"
-        ];
-        cache_file = "/var/lib/dnscrypt-proxy2/public-resolvers.md";
-        minisign_key = "RWQf6LRCGA9i53mlYecO4IzT51TGPpvWucNSCh1CBM0QTaLn73Y7GFO3";
-      };
-
-      # You can choose a specific set of servers from https://github.com/DNSCrypt/dnscrypt-resolvers/blob/master/v3/public-resolvers.md
-      server_names = [ "dnscrypt-de-blahdns-ipv4" "dnscrypt-de-blahdns-ipv6" "dnscrypt-fi-blahdns-ipv4" "dnscrypt-fi-blahdns-ipv6" ];
-    };
-  };
-
-  systemd.services.dnscrypt-proxy2.serviceConfig = {
-    StateDirectory = "dnscrypt-proxy";
-  };
-
-
   # Configure X
   services.xserver.enable = true;
-  services.xserver.displayManager.lightdm.enable = true;
-
-  # X Server Keybindings
+  services.xserver.libinput.enable = true;
   services.xserver.xkbOptions = "ctrl:nocaps";
+  services.xserver.displayManager.lightdm.enable = true;
 
   # Enable SSH
   programs.ssh.startAgent = true;
-
-
-  # SwayWM
-  programs.sway = {
-  enable = true;
-  wrapperFeatures.gtk = true; # so that gtk works properly
-  extraPackages = with pkgs; [
-    swaylock-effects
-    swayidle
-    waybar
-    wl-clipboard
-    mako # notification daemon
-    wofi # Dmenu is the default in the config but i recommend wofi since its wayland native
-    wdisplays
-    sway-contrib.grimshot
-  ];
-  };
-
-  # i3WM
-  services.xserver.windowManager.i3 = {
-    enable = true;
-    package = pkgs.i3-gaps;
-    extraPackages = with pkgs; [
-    dunst # notification daemon
-    nitrogen
-    i3lock-fancy
-    rofi # Dmenu is the default in the config but i recommend wofi since its wayland native
-    arandr
-  ];
-  };
-  
 
   # Enable sound.
   sound.enable = true;
   hardware.pulseaudio.enable = true;
   services.pipewire.enable = true;
 
-  # Enable touchpad support (enabled default in most desktopManager).
-  services.xserver.libinput.enable = true;
+  # Brightness
+  programs.light.enable = true;
 
   # Font Config
   fonts.fontconfig.enable = true;
   fonts.fontconfig.antialias = true;
   fonts.fontconfig.allowBitmaps = true;
   fonts.fontconfig.hinting.enable = true;
-
 
   # Enable ZSH
   programs.zsh.enable = true;
@@ -193,26 +100,11 @@
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
-  environment.systemPackages = with pkgs; [
-     wget vim git neofetch acpi
-     polkit_gnome xdg-user-dirs
-     alacritty font-awesome_4
-     i3status-rust brightnessctl
-     mps-youtube youtube-dl
-     mpv-unwrapped xwayland
-     virtmanager qemu
-     xdg-desktop-portal
-     fontconfig gsettings-desktop-schemas
-     gnome3.gnome-settings-daemon
-     glib
-   ];
 
-  # Udev Packages
-  services.udev.packages = with pkgs; [ gnome3.gnome-settings-daemon ];
-  # DBus packages
-  services.dbus.packages = with pkgs; [ gnome2.GConf ];
+
   # Enable the OpenSSH daemon.
   services.openssh.enable = true;
+
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
