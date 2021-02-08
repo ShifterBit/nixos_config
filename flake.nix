@@ -6,7 +6,7 @@
     nur = { url = "github:nix-community/NUR"; };
     neovim-nightly-overlay = { url = "github:nix-community/neovim-nightly-overlay"; };
   };
-  outputs = { self, home-manager, nixpkgs, nur, neovim-nightly-overlay, ... }: {
+  outputs = { self, home-manager, nixpkgs, nur, neovim-nightly-overlay, ... }@inputs: {
     nixosConfigurations.shifter = nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";
 
