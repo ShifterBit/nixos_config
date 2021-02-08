@@ -6,7 +6,8 @@
 
 {
   imports =
-    [ # Include the results of the hardware scan.
+    [
+      # Include the results of the hardware scan.
       ./hardware-configuration.nix
       ./packages.nix
       ./networking.nix
@@ -25,6 +26,14 @@
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
+
+  # Configure Nix
+  nix.package = pkgs.nixUnstable;
+  nix.extraOptions = ''
+    keep-outputs = true
+    keep-derivations = true
+    experimental-features = nix-command flakes
+  '';
 
   # Enable Flatpak
   services.flatpak.enable = true;
@@ -52,12 +61,7 @@
   systemd.user.services.xdg-desktop-portal.environment = {
     XDG_DESKTOP_PORTAL_DIR = config.environment.variables.XDG_DESKTOP_PORTAL_DIR;
   };
- 
-  # Keep Derivations for nix_direnv
-  nix.extraOptions = ''
-    keep-outputs = true
-    keep-derivations = true
-    '';
+
   # MongoDB
   services.mongodb.enable = true;
 
@@ -93,18 +97,13 @@
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.tek = {
-     isNormalUser = true;
-     extraGroups = [ "wheel" "libvirtd" "networkmanager" "kvm" "audio" "video" ]; 
-     shell = pkgs.zsh;
-   };
-
-  # List packages installed in system profile. To search, run:
-  # $ nix search wget
-
+    isNormalUser = true;
+    extraGroups = [ "wheel" "libvirtd" "networkmanager" "kvm" "audio" "video" ];
+    shell = pkgs.zsh;
+  };
 
   # Enable the OpenSSH daemon.
   services.openssh.enable = true;
-
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
