@@ -57,7 +57,7 @@
   programs.neovim = {
       enable = true;
       withPython3 = true;
-      package = pkgs.neovim-nightly;
+      package = pkgs.neovim-nightly-overlay.neovim-nightly;
       extraPython3Packages = (ps: with ps; [
         pynvim
         unidecode
