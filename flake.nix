@@ -12,11 +12,6 @@
 
       modules = [
         ./configuration.nix
-        home-manager.nixosModules.home-manager
-        {
-          home-manager.useUserPackages = true;
-          home-manager.users.tek = import ./home.nix;
-        }
         {nixpkgs.overlays = [ nur.overlay neovim-nightly-overlay.overlay]; }
 
       ];
