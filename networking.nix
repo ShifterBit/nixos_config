@@ -37,7 +37,13 @@
         minisign_key = "RWQf6LRCGA9i53mlYecO4IzT51TGPpvWucNSCh1CBM0QTaLn73Y7GFO3";
       };
       # You can choose a specific set of servers from https://github.com/DNSCrypt/dnscrypt-resolvers/blob/master/v3/public-resolvers.md
-      server_names = [ "dnscrypt-de-blahdns-ipv4" "dnscrypt-de-blahdns-ipv6" "dnscrypt-fi-blahdns-ipv4" "dnscrypt-fi-blahdns-ipv6" ];
+      server_names = [ 
+        "dnscrypt-de-blahdns-ipv4" "dnscrypt-de-blahdns-ipv6"
+        "dnscrypt-fi-blahdns-ipv4" "dnscrypt-fi-blahdns-ipv6"
+        "doh-fi-snopyta" "doh-fi-snopyta-ipv6"
+        "nextdns" "nextdns-ipv6"
+        "adguard-dns" "adguard-dns-ipv6"
+      ];
     };
   };
 

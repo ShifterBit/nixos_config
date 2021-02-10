@@ -39,6 +39,13 @@
     # File Managers
     xfce.thunar
 
+    # PDF Viewer
+    zathura
+
+    # Media
+    mpv
+    youtube-dl
+
     # Terminal
     alacritty
 
@@ -47,7 +54,6 @@
     neovim
     git
     neofetch
-    youtube-dl
     axel
     aria
     bat
@@ -67,11 +73,6 @@
     niv
     nixpkgs-fmt
 
-    # OBS
-    obs-studio
-    obs-wlrobs
-    obs-v4l2sink
-
     # Themes
     lxappearance
     materia-theme
@@ -90,7 +91,7 @@
     vivaldi
     vivaldi-ffmpeg-codecs
     vivaldi-widevine
-    qutebrowser
+    unstable.qutebrowser
     lynx
 
     # Utils
