@@ -34,6 +34,7 @@
     keep-derivations = true
     experimental-features = nix-command flakes
   '';
+  nixpkgs.config.allowUnfree = true;
 
   # Enable Flatpak
   services.flatpak.enable = true;
@@ -86,6 +87,9 @@
   # Brightness
   programs.light.enable = true;
 
+  # DoAs
+  security.doas.enable = true;
+
   # Font Config
   fonts.fontconfig.enable = true;
   fonts.fontconfig.antialias = true;
@@ -101,6 +105,9 @@
     extraGroups = [ "wheel" "libvirtd" "networkmanager" "kvm" "audio" "video" ];
     shell = pkgs.zsh;
   };
+
+  # Enable steam
+  programs.steam.enable = true;
 
   # Enable the OpenSSH daemon.
   services.openssh.enable = true;

@@ -68,7 +68,6 @@
 
     # Development Tools
     mongodb-compass
-    vivaldi-widevine
     tree-sitter
     niv
     nixpkgs-fmt
@@ -86,13 +85,17 @@
     gzip
 
     # Browsers
-    qutebrowser
-    ungoogled-chromium
-    vivaldi
-    vivaldi-ffmpeg-codecs
-    vivaldi-widevine
     unstable.qutebrowser
-    lynx
+    unstable.ungoogled-chromium
+    unstable.vivaldi
+    unstable.vivaldi-ffmpeg-codecs
+    unstable.vivaldi-widevine
+    unstable.qutebrowser
+    unstable.lynx
+    unstable.brave
+    unstable.firefox
+    unstable.firefox-beta-bin
+    unstable.firefox-devedition-bin
 
     # Utils
     pavucontrol
@@ -100,11 +103,11 @@
     station
 
     # Running Software/Gaming
-    lutris
-    steam-run
+    unstable.lutris
+    unstable.steam-run
     appimage-run
-    winetricks
-    wineWowPackages.staging
+    unstable.winetricks
+    unstable.wineWowPackages.staging
     
    ];
 
